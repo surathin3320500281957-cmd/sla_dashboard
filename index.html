@@ -162,10 +162,7 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
 </div>
 <div class="tabbar">
   <button class="tbtn on" onclick="sw('ov',this)">📊 ภาพรวม</button>
-  <button class="tbtn" onclick="sw('dt',this)">📋 รายละเอียด <span class="tpill tp-b" id="tb-dt">1,003</span></button>
   <button class="tbtn" onclick="sw('na',this)">⚠️ ไม่ดำเนินการ <span class="tpill tp-r" id="tb-na">88</span></button>
-  <button class="tbtn" onclick="sw('np',this)">🔍 สรุปไม่ดำเนินการ</button>
-  <button class="tbtn" onclick="sw('pv',this)">📈 ตารางสรุป</button>
   <button class="tbtn" onclick="sw('mn',this)">📅 ไม่ดำเนินการ(เดือนก่อน) <span class="tpill tp-i" id="tb-mn">137</span></button>
 </div>
 
@@ -201,6 +198,12 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
   </div>
   <div class="sec">
     <div class="ebar"><span class="elbl">📤 Export:</span>
+      <button class="bex bxl" onclick="exXL('tPV','ตารางสรุป')">⬇ Excel</button>
+      <button class="bex bpd" onclick="exPDF('tPV','ตารางสรุป')">⬇ PDF</button></div>
+    <div class="twrap" id="pvWrap"></div>
+  </div>
+  <div class="sec">
+    <div class="ebar"><span class="elbl">📤 Export:</span>
       <button class="bex bxl" onclick="exXL('tOv','ภาพรวม')">⬇ Excel</button>
       <button class="bex bpd" onclick="exPDF('tOv','ภาพรวมสัญญา')">⬇ PDF</button></div>
     <div class="twrap"><table id="tOv"><thead><tr>
@@ -208,29 +211,6 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
       <th>บ้านเลขที่</th><th class="ho">การค้ำประกัน</th>
       <th class="hw">การซ่อม</th><th class="hi">สถานะซ่อม</th>
     </tr></thead><tbody id="ovBody"></tbody></table></div>
-  </div>
-</div>
-
-<!-- ══ DETAIL ══ -->
-<div id="tp-dt" class="tpane">
-  <div class="frow">
-    <label>กอง:</label><select id="dt-dept" onchange="dtDeptChange()"><option value="">ทั้งหมด</option></select>
-    <span class="sep">›</span>
-    <label>สาขา:</label><select id="dt-bp" onchange="dtBPChange()"><option value="">ทั้งหมด</option></select>
-    <span class="sep">›</span>
-    <label>โครงการ:</label><select id="dt-proj" onchange="renDt()"><option value="">ทั้งหมด</option></select>
-    <label>สถานะ:</label><select id="dt-stat" onchange="renDt()"><option value="">ทั้งหมด</option></select>
-    <button class="fbtn fbtn-clr" onclick="dtClear()">✕ ล้าง</button>
-    <span class="fcnt" id="dt-cnt"></span>
-  </div>
-  <div class="sec">
-    <div class="ebar"><span class="elbl">📤 Export:</span>
-      <button class="bex bxl" onclick="exXL('tDt','รายละเอียด')">⬇ Excel</button>
-      <button class="bex bpd" onclick="exPDF('tDt','รายละเอียดสัญญา')">⬇ PDF</button></div>
-    <div class="twrap"><table id="tDt"><thead><tr>
-      <th style="width:36px;">#</th><th>กอง</th><th>สาขา</th><th>โครงการ</th>
-      <th>บ้านเลขที่</th><th>รหัสลูกค้า</th><th>สถานะดำเนินงาน</th>
-    </tr></thead><tbody id="dBody"></tbody></table></div>
   </div>
 </div>
 
@@ -261,6 +241,12 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
   </div>
   <div class="sec">
     <div class="ebar"><span class="elbl">📤 Export:</span>
+      <button class="bex bxl" onclick="exXL('tNP','สรุปไม่ดำเนินการ')">⬇ Excel</button>
+      <button class="bex bpd" onclick="exPDF('tNP','สรุปไม่ดำเนินการ')">⬇ PDF</button></div>
+    <div class="twrap" id="npWrap"></div>
+  </div>
+  <div class="sec">
+    <div class="ebar"><span class="elbl">📤 Export:</span>
       <button class="bex bxl" onclick="exXL('tNA','ไม่ดำเนินการ')">⬇ Excel</button>
       <button class="bex bpd" onclick="exPDF('tNA','ไม่ดำเนินการ')">⬇ PDF</button></div>
     <div class="twrap"><table id="tNA"><thead><tr>
@@ -268,44 +254,6 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
       <th class="hw">โครงการ</th><th class="hw">บ้านเลขที่</th>
       <th class="hw">รหัสลูกค้า</th><th class="ho">ปรับสรุปการ UPDATE</th>
     </tr></thead><tbody id="naBody"></tbody></table></div>
-  </div>
-</div>
-
-<!-- ══ NA PIVOT ══ -->
-<div id="tp-np" class="tpane">
-  <div class="wban"><span style="font-size:22px;">🔍</span><div>
-    <h4>ตารางสรุปกลุ่มไม่ดำเนินการ — แยกตาม ปรับสรุปการ UPDATE</h4>
-    <p>Row: กอง / สาขา &nbsp;|&nbsp; Column: ปรับสรุปการ UPDATE</p>
-  </div></div>
-  <div class="frow">
-    <label>กอง:</label><select id="np-dept" onchange="npDeptChange()"><option value="">ทั้งหมด</option></select>
-    <span class="sep">›</span>
-    <label>สาขา:</label><select id="np-bp" onchange="renNP()"><option value="">ทั้งหมด</option></select>
-    <button class="fbtn fbtn-clr" onclick="npClear()">✕ ล้าง</button>
-    <span class="fcnt" id="np-cnt"></span>
-  </div>
-  <div class="sec">
-    <div class="ebar"><span class="elbl">📤 Export:</span>
-      <button class="bex bxl" onclick="exXL('tNP','สรุปไม่ดำเนินการ')">⬇ Excel</button>
-      <button class="bex bpd" onclick="exPDF('tNP','สรุปไม่ดำเนินการ')">⬇ PDF</button></div>
-    <div class="twrap" id="npWrap"></div>
-  </div>
-</div>
-
-<!-- ══ PIVOT ══ -->
-<div id="tp-pv" class="tpane">
-  <div class="frow">
-    <label>กอง:</label><select id="pv-dept" onchange="pvDeptChange()"><option value="">ทั้งหมด</option></select>
-    <span class="sep">›</span>
-    <label>สาขา:</label><select id="pv-bp" onchange="renPV()"><option value="">ทั้งหมด</option></select>
-    <button class="fbtn fbtn-clr" onclick="pvClear()">✕ ล้าง</button>
-    <span class="fcnt" id="pv-cnt"></span>
-  </div>
-  <div class="sec">
-    <div class="ebar"><span class="elbl">📤 Export:</span>
-      <button class="bex bxl" onclick="exXL('tPV','ตารางสรุป')">⬇ Excel</button>
-      <button class="bex bpd" onclick="exPDF('tPV','ตารางสรุป')">⬇ PDF</button></div>
-    <div class="twrap" id="pvWrap"></div>
   </div>
 </div>
 
@@ -498,6 +446,28 @@ function renOv(){
     <td><span class="badge ${CFB[x.confirm_flag]||'bgy'}">${x.confirm_flag||'—'}</span></td>
     <td><span class="badge ${SB[x.next_custcare]||'bgy'}">${x.next_custcare||'—'}</span></td>
     </tr>`).join('');
+  // Pivot summary table (ตารางสรุป) — uses same filtered data
+  const pvDeps=[...new Set(f.map(x=>x.dept))].sort();
+  let pvH=`<table id="tPV"><thead><tr><th>กอง</th><th>สาขา</th>`;
+  SS.forEach(s=>pvH+=`<th style="text-align:right;font-size:11px;${s==='ไม่ดำเนินการ'?'background:#FDDCDC;color:#7B1111;border-bottom-color:#F5AAAA;':''}">${s}</th>`);
+  pvH+=`<th style="text-align:right;background:#C8D9F5;color:#0F2B6F;">รวม</th></tr></thead><tbody>`;
+  pvDeps.forEach(dep=>{
+    const dr=f.filter(r=>r.dept===dep),bs=uniq(dr,'bp');
+    bs.forEach((bp,bi)=>{
+      const br=dr.filter(r=>r.bp===bp);
+      pvH+=`<tr><td>${bi===0?dep:''}</td><td style="font-size:13px;">${bp}</td>`;
+      SS.forEach(s=>{const c=br.filter(r=>r.status===s).length;
+        pvH+=`<td class="num">${c?s==='ไม่ดำเนินการ'?`<span class="hlw">${c}</span>`:c:'<span class="z">—</span>'}</td>`;});
+      pvH+=`<td class="num"><strong>${br.length}</strong></td></tr>`;
+    });
+    pvH+=`<tr class="sub"><td colspan="2">รวม ${dep}</td>`;
+    SS.forEach(s=>{const c=dr.filter(r=>r.status===s).length;pvH+=`<td class="num">${c?s==='ไม่ดำเนินการ'?`<span class="hlw">${c}</span>`:c:'—'}</td>`;});
+    pvH+=`<td class="num"><strong>${dr.length}</strong></td></tr>`;
+  });
+  pvH+=`<tr class="grand"><td colspan="2">ผลรวมทั้งหมด</td>`;
+  SS.forEach(s=>{const c=f.filter(r=>r.status===s).length;pvH+=`<td class="num">${c?s==='ไม่ดำเนินการ'?`<span class="hlw">${c}</span>`:c:'—'}</td>`;});
+  pvH+=`<td class="num"><strong>${f.length}</strong></td></tr></tbody></table>`;
+  document.getElementById('pvWrap').innerHTML=pvH;
 }
 
 // ════════════════════════════════
@@ -594,6 +564,28 @@ function renNA(){
     <td style="font-size:12px;max-width:185px;white-space:normal;line-height:1.5;">${x.proj}</td>
     <td>${x.house||'—'}</td><td style="font-size:12px;">${x.cust||'—'}</td>
     <td><span class="badge ${UB[x.update]||'bgy'}">${x.update||'—'}</span></td></tr>`).join('');
+  // NP summary table (สรุปไม่ดำเนินการ) — uses same filtered data
+  const npDeps=[...new Set(f.map(x=>x.dept))].sort();
+  const uc=['hw','ho','','hg','hp','ht'];
+  let npH=`<table id="tNP"><thead><tr><th>กอง</th><th>สาขา</th>`;
+  UU.forEach((u,i)=>npH+=`<th class="${uc[i]||''}" style="text-align:right;font-size:11px;">${u}</th>`);
+  npH+=`<th style="text-align:right;background:#C8D9F5;color:#0F2B6F;">รวม</th></tr></thead><tbody>`;
+  npDeps.forEach(dep=>{
+    const dr=f.filter(r=>r.dept===dep),bs=uniq(dr,'bp');
+    bs.forEach((bp,bi)=>{
+      const br=dr.filter(r=>r.bp===bp);
+      npH+=`<tr><td>${bi===0?dep:''}</td><td style="font-size:13px;">${bp}</td>`;
+      UU.forEach(u=>{const c=br.filter(r=>r.update===u).length;npH+=`<td class="num">${c||'<span class="z">—</span>'}</td>`;});
+      npH+=`<td class="num"><strong>${br.length}</strong></td></tr>`;
+    });
+    npH+=`<tr class="sub"><td colspan="2">รวม ${dep}</td>`;
+    UU.forEach(u=>{const c=dr.filter(r=>r.update===u).length;npH+=`<td class="num">${c||'—'}</td>`;});
+    npH+=`<td class="num"><strong>${dr.length}</strong></td></tr>`;
+  });
+  npH+=`<tr class="grand"><td colspan="2">ผลรวมทั้งหมด</td>`;
+  UU.forEach(u=>{const c=f.filter(r=>r.update===u).length;npH+=`<td class="num"><strong>${c||'—'}</strong></td>`;});
+  npH+=`<td class="num"><strong>${f.length}</strong></td></tr></tbody></table>`;
+  document.getElementById('npWrap').innerHTML=npH;
 }
 function naKpiClick(k){
   if(k==='all'){setV('na-dept','');updSel('na-bp',uniq(naBase(),'bp'),'');updSel('na-proj',uniq(naBase(),'proj'),'');}
@@ -794,13 +786,9 @@ function initCharts(){
 function initDDs(){
   updSel('ov-dept',uniq(AF,'dept'),'');updSel('ov-bp',uniq(AF,'bp'),'');updSel('ov-proj',uniq(AF,'proj'),'');
   updSel('ov-guarantee',uniq(AF,'guarantee').filter(Boolean),'');updSel('ov-confirm',uniq(AF,'confirm_flag').filter(Boolean),'');updSel('ov-next',uniq(AF,'next_custcare').filter(Boolean),'');
-  updSel('dt-dept',uniq(AF,'dept'),'');updSel('dt-bp',uniq(AF,'bp'),'');
-  updSel('dt-proj',uniq(AF,'proj'),'');updSel('dt-stat',SS,'');
   const nb=naBase();
   updSel('na-dept',uniq(nb,'dept'),'');updSel('na-bp',uniq(nb,'bp'),'');
   updSel('na-proj',uniq(nb,'proj'),'');updSel('na-upd',uniq(nb,'update').filter(Boolean),'');
-  updSel('np-dept',uniq(nb,'dept'),'');updSel('np-bp',uniq(nb,'bp'),'');
-  updSel('pv-dept',uniq(AF,'dept'),'');updSel('pv-bp',uniq(AF,'bp'),'');
   updSel('mn-dept',uniq(MN,'dept'),'');updSel('mn-bp',uniq(MN,'bp'),'');
   updSel('mn-proj',uniq(MN,'proj'),'');updSel('mn-upd',uniq(MN,'update').filter(Boolean),'');
 }
@@ -854,7 +842,7 @@ function exPDF(id,title){
 function ds(){const n=new Date();return `${n.getDate()}-${n.getMonth()+1}-${n.getFullYear()-543}`;}
 
 // Boot
-initCharts();initDDs();renOv();renDt();renNA();renNP();renPV();renMn();
+initCharts();initDDs();renOv();renNA();renMn();
 </script>
 </body>
 </html>
