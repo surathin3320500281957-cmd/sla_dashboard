@@ -161,7 +161,7 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
   <span class="ts-pill">อัปเดต: 19-6-2569  09:00 น.</span>
 </div>
 <div class="tabbar">
-  <button class="tbtn on" onclick="sw('ov',this)">📊 ภาพรวม</button>
+  <button class="tbtn on" onclick="sw('ov',this)">📊 ภาพรวม <span class="tpill tp-b" id="tb-ov">1,003</span></button>
   <button class="tbtn" onclick="sw('na',this)">⚠️ ไม่ดำเนินการ <span class="tpill tp-r" id="tb-na">88</span></button>
   <button class="tbtn" onclick="sw('mn',this)">📅 ไม่ดำเนินการ(เดือนก่อน) <span class="tpill tp-i" id="tb-mn">137</span></button>
 </div>
@@ -386,6 +386,7 @@ function renOv(){
   const f=ovFiltered();
   const d=getV('ov-dept'),b=getV('ov-bp'),p=getV('ov-proj');
   document.getElementById('ov-cnt').textContent=`${f.length.toLocaleString()} รายการ`;
+  document.getElementById('tb-ov').textContent=AF.length.toLocaleString();
   // KPI
   const t=f.length||1;
   const ks=[
