@@ -314,20 +314,20 @@ const CFB={'ซ่อม':'bbl','ไม่ดำเนินการ':'brd'};;
 const UC={'ยังไม่สำรวจ':'#DC2626','อยู่ในค้ำประกันฝ่ายก่อสร้าง':'#D97706',
   'เคยซ่อมแล้ว':'#1D5BD8','ลูกค้ารับตามสภาพ':'#059669',
   'สำรวจแล้วรอลงระบบ SLA':'#7C3AED','ลูกค้ายกเลิกขอคืนห้อง':'#0891B2',
-  'รอการUpdate':'#64748B'};
+  'รอการUpdate':'#64748B','เปลี่ยนเช่าเป็นเช่าซื้อ':'#0D9488'};
 const UB={'ยังไม่สำรวจ':'brd','อยู่ในค้ำประกันฝ่ายก่อสร้าง':'bor',
   'เคยซ่อมแล้ว':'bbl','ลูกค้ารับตามสภาพ':'bgr',
   'สำรวจแล้วรอลงระบบ SLA':'bpu','ลูกค้ายกเลิกขอคืนห้อง':'bte',
-  'รอการUpdate':'bgy'};
+  'รอการUpdate':'bgy','เปลี่ยนเช่าเป็นเช่าซื้อ':'bte'};
 // Monthly update colors — เพิ่มสีสำหรับ MN ที่มีค่าต่างออกไป
 const MC={'ลงระบบSLAแล้ว':'#1D5BD8','ส่งมอบแล้ว':'#059669','เคยซ่อมแล้ว':'#0891B2',
   'อยู่ในค้ำประกันฝ่ายก่อสร้าง':'#D97706','ลูกค้ารับตามสภาพ':'#7C3AED',
   'ยังไม่สำรวจ':'#DC2626','สำรวจแล้วรอลงระบบ SLA':'#9333EA',
-  'ลูกค้ายกเลิกขอคืนห้อง':'#DB2777','':'#CBD5E1'};
+  'ลูกค้ายกเลิกขอคืนห้อง':'#DB2777','รอการUpdate':'#64748B'};
 const MB={'ลงระบบSLAแล้ว':'bbl','ส่งมอบแล้ว':'bgr','เคยซ่อมแล้ว':'bte',
   'อยู่ในค้ำประกันฝ่ายก่อสร้าง':'bor','ลูกค้ารับตามสภาพ':'bpu',
   'ยังไม่สำรวจ':'brd','สำรวจแล้วรอลงระบบ SLA':'bgy',
-  'ลูกค้ายกเลิกขอคืนห้อง':'bpk','':'bgy'};
+  'ลูกค้ายกเลิกขอคืนห้อง':'bpk','รอการUpdate':'bgy'};
 const DC={'มบ.':'#1D5BD8','ตบ.1':'#059669','ตบ.2':'#D97706'};
 const SS=Object.keys(SC), UU=Object.keys(UC);
 const CH={};
@@ -672,25 +672,26 @@ function renPV(){
 // ════════════════════════════════
 function mnFiltered(){
   const d=getV('mn-dept'),b=getV('mn-bp'),p=getV('mn-proj'),u=getV('mn-upd');
-  return MN.filter(x=>(!d||x.dept===d)&&(!b||x.bp===b)&&(!p||x.proj===p)&&(!u||x.update===u));
+  return MN.filter(x=>(!d||x.dept===d)&&(!b||x.bp===b)&&(!p||x.proj===p)
+    &&(!u||(u==='รอการUpdate'?(x.update===''||x.update==='รอการUpdate'):x.update===u)));
 }
 function mnDeptChange(){
   const d=getV('mn-dept'),base=d?MN.filter(x=>x.dept===d):MN;
   updSel('mn-bp',uniq(base,'bp'),'');
   updSel('mn-proj',uniq(base,'proj'),'');
-  updSel('mn-upd',uniq(base,'update').filter(Boolean),'');
+  updSel('mn-upd',uniq(base,'update'),'');
   renMn();
 }
 function mnBPChange(){
   const d=getV('mn-dept'),b=getV('mn-bp'),base=MN.filter(x=>(!d||x.dept===d)&&(!b||x.bp===b));
   updSel('mn-proj',uniq(base,'proj'),'');
-  updSel('mn-upd',uniq(base,'update').filter(Boolean),'');
+  updSel('mn-upd',uniq(base,'update'),'');
   renMn();
 }
 function mnClear(){
   ['mn-dept','mn-bp','mn-proj','mn-upd'].forEach(id=>setV(id,''));
   updSel('mn-bp',uniq(MN,'bp'),'');updSel('mn-proj',uniq(MN,'proj'),'');
-  updSel('mn-upd',uniq(MN,'update').filter(Boolean),'');renMn();
+  updSel('mn-upd',uniq(MN,'update'),'');renMn();
 }
 function mnKpiClick(k){
   if(k==='all'){setV('mn-dept','');updSel('mn-bp',uniq(MN,'bp'),'');updSel('mn-proj',uniq(MN,'proj'),'');}
@@ -734,7 +735,7 @@ function renMn(){
     <td>${d.house||'—'}</td><td style="font-size:12px;">${d.cust||'—'}</td>
     <td style="font-size:12px;">${d.cust_name||'—'}</td>
     <td><span class="badge bgy" style="font-size:11px;">${d.change_status||'—'}</span></td>
-    <td><span class="badge ${MB[d.update]||'bgy'}">${d.update||'—'}</span></td></tr>`).join('');
+    <td><span class="badge ${MB[d.update||'รอการUpdate']||'bgy'}">${d.update||'รอการUpdate'}</span></td></tr>`).join('');
 }
 
 // ════════════════════════════════
@@ -793,7 +794,7 @@ function initDDs(){
   updSel('na-dept',uniq(nb,'dept'),'');updSel('na-bp',uniq(nb,'bp'),'');
   updSel('na-proj',uniq(nb,'proj'),'');updSel('na-upd',uniq(nb,'update'),'');
   updSel('mn-dept',uniq(MN,'dept'),'');updSel('mn-bp',uniq(MN,'bp'),'');
-  updSel('mn-proj',uniq(MN,'proj'),'');updSel('mn-upd',uniq(MN,'update').filter(Boolean),'');
+  updSel('mn-proj',uniq(MN,'proj'),'');updSel('mn-upd',uniq(MN,'update'),'');
 }
 
 function sw(id,btn){
