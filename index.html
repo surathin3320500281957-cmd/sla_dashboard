@@ -319,11 +319,11 @@ const CFB={'ซ่อม':'bbl','ไม่ดำเนินการ':'brd'};;
 const UC={'ยังไม่สำรวจ':'#DC2626','อยู่ในค้ำประกันฝ่ายก่อสร้าง':'#D97706',
   'เคยซ่อมแล้ว':'#1D5BD8','ลูกค้ารับตามสภาพ':'#059669',
   'สำรวจแล้วรอลงระบบ SLA':'#7C3AED','ลูกค้ายกเลิกขอคืนห้อง':'#0891B2',
-  'รอการUpdate':'#64748B','เปลี่ยนเช่าเป็นเช่าซื้อ':'#0D9488'};
+  'เปลี่ยนเช่าเป็นเช่าซื้อ':'#0D9488'};
 const UB={'ยังไม่สำรวจ':'brd','อยู่ในค้ำประกันฝ่ายก่อสร้าง':'bor',
   'เคยซ่อมแล้ว':'bbl','ลูกค้ารับตามสภาพ':'bgr',
   'สำรวจแล้วรอลงระบบ SLA':'bpu','ลูกค้ายกเลิกขอคืนห้อง':'bte',
-  'รอการUpdate':'bgy','เปลี่ยนเช่าเป็นเช่าซื้อ':'bte'};
+  'เปลี่ยนเช่าเป็นเช่าซื้อ':'bte'};
 // Monthly update colors — เพิ่มสีสำหรับ MN ที่มีค่าต่างออกไป
 const MC={'ลงระบบSLAแล้ว':'#1D5BD8','ส่งมอบแล้ว':'#059669','เคยซ่อมแล้ว':'#0891B2',
   'อยู่ในค้ำประกันฝ่ายก่อสร้าง':'#D97706','ลูกค้ารับตามสภาพ':'#7C3AED',
@@ -575,7 +575,7 @@ function renNA(){
     <td>${x.dept}</td><td style="font-size:13px;">${x.bp}</td>
     <td style="font-size:12px;max-width:185px;white-space:normal;line-height:1.5;">${x.proj}</td>
     <td>${x.house||'—'}</td><td style="font-size:12px;">${x.cust||'—'}</td>
-    <td><span class="badge ${UB[x.update]||'bgy'}">${x.update}</span></td></tr>`).join('');
+    <td><span class="badge ${UB[x.update]||'bgy'}">${x.update||'—'}</span></td></tr>`).join('');
   // NP summary table (สรุปไม่ดำเนินการ) — uses same filtered data
   const npDeps=[...new Set(f.map(x=>x.dept))].sort();
   const uc=['hw','ho','','hg','hp','ht'];
@@ -681,8 +681,7 @@ function renPV(){
 // ════════════════════════════════
 function mnFiltered(){
   const d=getV('mn-dept'),b=getV('mn-bp'),p=getV('mn-proj'),u=getV('mn-upd');
-  return MN.filter(x=>(!d||x.dept===d)&&(!b||x.bp===b)&&(!p||x.proj===p)
-    &&(!u||(u==='รอการUpdate'?(x.update===''||x.update==='รอการUpdate'):x.update===u)));
+  return MN.filter(x=>(!d||x.dept===d)&&(!b||x.bp===b)&&(!p||x.proj===p)&&(!u||x.update===u));
 }
 function mnDeptChange(){
   const d=getV('mn-dept'),base=d?MN.filter(x=>x.dept===d):MN;
@@ -742,7 +741,7 @@ function renMn(){
     <td>${d.dept}</td><td style="font-size:13px;">${d.bp}</td>
     <td style="font-size:12px;max-width:170px;white-space:normal;line-height:1.5;">${d.proj}</td>
     <td>${d.house||'—'}</td><td style="font-size:12px;">${d.cust||'—'}</td>
-    <td><span class="badge ${MB[d.update||'รอการUpdate']||'bgy'}">${d.update||'รอการUpdate'}</span></td></tr>`).join('');
+    <td><span class="badge ${MB[d.update]||'bgy'}">${d.update||'—'}</span></td></tr>`).join('');
   // MN Summary table (สรุปไม่ดำเนินการเดือนก่อน)
   const mnDeps=[...new Set(f.map(x=>x.dept))].sort();
   const mnUU=Object.keys(MC).filter(u=>f.some(r=>(r.update||'รอการUpdate')===u));
