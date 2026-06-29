@@ -164,7 +164,7 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
 </div>
 <div class="tabbar">
   <button class="tbtn on" onclick="sw('ov',this)">📊 ภาพรวม <span class="tpill tp-b" id="tb-ov">991</span></button>
-  <button class="tbtn" onclick="sw('na',this)">⚠️ ไม่ดำเนินการ <span class="tpill tp-r" id="tb-na">80</span></button>
+  <button class="tbtn" onclick="sw('na',this)">⚠️ ไม่ดำเนินการ(สคล/สคจ ชี้แจง) <span class="tpill tp-r" id="tb-na">80</span></button>
   <button class="tbtn" onclick="sw('mn',this)">📅 ไม่ดำเนินการ(เดือนก่อน) <span class="tpill tp-i" id="tb-mn">81</span></button>
 </div>
 
@@ -227,7 +227,7 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
 <!-- ══ NO ACTION ══ -->
 <div id="tp-na" class="tpane">
   <div class="wban"><span style="font-size:22px;">⚠️</span><div>
-    <h4>รายการ "ไม่ดำเนินการ" — ต้องติดตาม</h4>
+    <h4>รายการ "ไม่ดำเนินการ(สคล/สคจ ชี้แจง)" — ต้องติดตาม</h4>
     <p>เชื่อมข้อมูลผ่านรหัสลูกค้า → sheet "สำหรับกรอง-ตรวจสอบ" | คอลัมน์ "ปรับสรุปการ UPDATE"</p>
   </div></div>
   <div class="frow">
@@ -252,14 +252,14 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
   </div>
   <div class="sec">
     <div class="ebar"><span class="elbl">📤 Export:</span>
-      <button class="bex bxl" onclick="exXL('tNP','สรุปไม่ดำเนินการ')">⬇ Excel</button>
-      <button class="bex bpd" onclick="exPDF('tNP','สรุปไม่ดำเนินการ')">⬇ PDF</button></div>
+      <button class="bex bxl" onclick="exXL('tNP','สรุปไม่ดำเนินการ(สคล/สคจ ชี้แจง)')">⬇ Excel</button>
+      <button class="bex bpd" onclick="exPDF('tNP','สรุปไม่ดำเนินการ(สคล/สคจ ชี้แจง)')">⬇ PDF</button></div>
     <div class="twrap" id="npWrap"></div>
   </div>
   <div class="sec">
     <div class="ebar"><span class="elbl">📤 Export:</span>
-      <button class="bex bxl" onclick="exXL('tNA','ไม่ดำเนินการ')">⬇ Excel</button>
-      <button class="bex bpd" onclick="exPDF('tNA','ไม่ดำเนินการ')">⬇ PDF</button></div>
+      <button class="bex bxl" onclick="exXL('tNA','ไม่ดำเนินการ(สคล/สคจ ชี้แจง)')">⬇ Excel</button>
+      <button class="bex bpd" onclick="exPDF('tNA','ไม่ดำเนินการ(สคล/สคจ ชี้แจง)')">⬇ PDF</button></div>
     <div class="twrap"><table id="tNA"><thead><tr>
       <th style="width:36px;">#</th><th class="hw">กอง</th><th class="hw">สาขา</th>
       <th class="hw">โครงการ</th><th class="hw">บ้านเลขที่</th>
