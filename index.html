@@ -213,7 +213,7 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
     <div class="twrap"><table id="tOv"><thead><tr>
       <th style="width:36px;">#</th><th>กอง</th><th>สาขา</th><th>โครงการ</th>
       <th>บ้านเลขที่</th>
-      <th class="ht">เริ่มสัญญา</th><th class="ht">สิ้นสุดสัญญา</th><th class="ht">Due ล่าสุด</th><th class="ht">เงิน Due</th><th class="ht">งวดค้าง</th><th class="ht" style="color:#DC2626;">หนี้ค้าง</th>
+      <th class="ht">เริ่มสัญญา</th><th class="ht">Due ล่าสุด</th><th class="ht">เงิน Due</th><th class="ht">งวดค้าง</th><th class="ht" style="color:#DC2626;">หนี้ค้าง</th>
       <th class="ho">การค้ำประกัน</th>
       <th class="hw">การซ่อม</th><th class="hi">สถานะซ่อม</th>
       <th class="hg">รับคำร้องแจ้งซ่อม</th><th class="hg">สำรวจซ่อม</th>
@@ -267,7 +267,7 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
     <div class="twrap"><table id="tNA"><thead><tr>
       <th style="width:36px;">#</th><th class="hw">กอง</th><th class="hw">สาขา</th>
       <th class="hw">โครงการ</th><th class="hw">บ้านเลขที่</th>
-      <th class="ht">เริ่มสัญญา</th><th class="ht">สิ้นสุดสัญญา</th><th class="ht">Due ล่าสุด</th><th class="ht">เงิน Due</th><th class="ht">งวดค้าง</th><th class="ht" style="color:#DC2626;">หนี้ค้าง</th>
+      <th class="ht">เริ่มสัญญา</th><th class="ht">Due ล่าสุด</th><th class="ht">เงิน Due</th><th class="ht">งวดค้าง</th><th class="ht" style="color:#DC2626;">หนี้ค้าง</th>
       <th class="hg">การค้ำประกัน</th><th class="ho">ปรับสรุปการ UPDATE</th>
       <th class="hg">รับคำร้องแจ้งซ่อม</th><th class="hg">สำรวจซ่อม</th>
       <th class="hg">ยืนยันการสำรวจซ่อม</th><th class="hg">ประมาณราคา</th>
@@ -322,7 +322,7 @@ tr.grand td{background:#C8D9F5 !important;font-weight:700;color:#0F2B6F;border-t
       <th style="width:36px;">#</th>
       <th class="hi">กอง</th><th class="hi">สาขา</th><th class="hi">โครงการ</th>
       <th class="hi">บ้านเลขที่</th>
-      <th class="ht">เริ่มสัญญา</th><th class="ht">สิ้นสุดสัญญา</th><th class="ht">Due ล่าสุด</th><th class="ht">เงิน Due</th><th class="ht">งวดค้าง</th><th class="ht" style="color:#DC2626;">หนี้ค้าง</th>
+      <th class="ht">เริ่มสัญญา</th><th class="ht">Due ล่าสุด</th><th class="ht">เงิน Due</th><th class="ht">งวดค้าง</th><th class="ht" style="color:#DC2626;">หนี้ค้าง</th>
       <th class="hg">การค้ำประกัน</th>
       <th class="hp">ปรับสรุปการ UPDATE</th>
       <th class="hg">รับคำร้องแจ้งซ่อม</th><th class="hg">สำรวจซ่อม</th>
@@ -492,7 +492,6 @@ function renOv(){
     <td style="font-size:12px;max-width:185px;white-space:normal;line-height:1.5;">${x.proj}</td>
     <td>${x.house||'—'}</td>
     <td style="font-size:12px;white-space:nowrap;">${x.start_con||'—'}</td>
-    <td style="font-size:12px;white-space:nowrap;">${x.end_con||'—'}</td>
     <td style="font-size:12px;white-space:nowrap;">${x.due_last||'—'}</td>
     <td style="text-align:right;">${x.due_amt||'—'}</td>
     <td style="text-align:right;">${x.overdue||'—'}</td>
@@ -632,7 +631,6 @@ function renNA(){
     <td style="font-size:12px;max-width:185px;white-space:normal;line-height:1.5;">${x.proj}</td>
     <td>${x.house||'—'}</td>
     <td style="font-size:12px;white-space:nowrap;">${x.start_con||'—'}</td>
-    <td style="font-size:12px;white-space:nowrap;">${x.end_con||'—'}</td>
     <td style="font-size:12px;white-space:nowrap;">${x.due_last||'—'}</td>
     <td style="text-align:right;">${x.due_amt||'—'}</td>
     <td style="text-align:right;">${x.overdue||'—'}</td>
@@ -819,7 +817,6 @@ function renMn(){
     <td style="font-size:12px;max-width:170px;white-space:normal;line-height:1.5;">${d.proj}</td>
     <td>${d.house||'—'}</td>
     <td style="font-size:12px;white-space:nowrap;">${d.start_con||'—'}</td>
-    <td style="font-size:12px;white-space:nowrap;">${d.end_con||'—'}</td>
     <td style="font-size:12px;white-space:nowrap;">${d.due_last||'—'}</td>
     <td style="text-align:right;">${d.due_amt||'—'}</td>
     <td style="text-align:right;">${d.overdue||'—'}</td>
